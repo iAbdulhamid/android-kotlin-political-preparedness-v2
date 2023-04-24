@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.example.android.politicalpreparedness.screen.election.VoterInfoViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="@dimen/default_padding"
+        tools:context="com.example.android.politicalpreparedness.screen.MainActivity">
+
+        <TextView
+            android:id="@+id/tvElectionName"
+            style="@style/TextViewHeaderStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@{viewModel.election.name}"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Election Name" />
+
+        <TextView
+            android:id="@+id/tvElectionDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_small"
+            app:dateText="@{viewModel.election.electionDay}"
+            app:layout_constraintTop_toBottomOf="@id/tvElectionName"
+            tools:text="12 November 2055" />
+
+        <TextView
+            android:id="@+id/labelHeader"
+            style="@style/TextViewTitleStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/election_information"
+            app:layout_constraintStart_toStartOf="@id/tvElectionDate"
+            app:layout_constraintTop_toBottomOf="@id/tvElectionDate" />
+
+        <TextView
+            android:id="@+id/tvVotingLocations"
+            style="@style/TextViewCommonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{() -> viewModel.onURLClick(viewModel.voterInfo.votingLocationFinderUrl)}"
+            android:text="@string/voting_locations_with_url"
+            app:layout_constraintStart_toStartOf="@id/tvElectionDate"
+            app:layout_constraintTop_toBottomOf="@id/labelHeader"
+            app:visible="@{viewModel.voterInfo.votingLocationFinderUrl}" />
+
+        <TextView
+            android:id="@+id/tvBallotInformation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_small"
+            android:onClick="@{() -> viewModel.onURLClick(viewModel.voterInfo.ballotInfoUrl)}"
+            android:text="@string/ballot_information_with_url"
+            app:layout_constraintStart_toStartOf="@id/tvElectionDate"
+            app:layout_constraintTop_toBottomOf="@id/tvVotingLocations"
+            app:visible="@{viewModel.voterInfo.ballotInfoUrl}" />
+
+
+        <TextView
+            android:id="@+id/state_correspondence_header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_small"
+            android:text="@{viewModel.voterInfo.name}"
+            app:layout_constraintStart_toStartOf="@id/tvElectionDate"
+            app:layout_constraintTop_toBottomOf="@id/tvBallotInformation"
+            tools:text="VoteInfo Name" />
+
+        <TextView
+            android:id="@+id/labelAddress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_small"
+            android:text="@{viewModel.voterInfo.correspondenceAddress}"
+            app:drawableLeftCompat="@drawable/outline_location_on_24"
+            app:layout_constraintStart_toStartOf="@id/tvElectionDate"
+            app:layout_constraintTop_toBottomOf="@id/state_correspondence_header"
+            app:visible="@{viewModel.voterInfo.correspondenceAddress}"
+            tools:text="Correspondence Address" />
+
+        <Button
+            android:id="@+id/btnToggleFollow"
+            style="@style/ButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:onClick="@{() -> viewModel.toggleElection(viewModel.election)}"
+            app:followText="@{viewModel.isFollow}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
